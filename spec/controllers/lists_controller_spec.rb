@@ -36,6 +36,22 @@ describe ListsController do
       get :new
       expect(assigns(:list)).to be_a_new List
     end
+  end
+
+  describe 'POST#create' do
+    it 'creates with valid attributes' do
+      expect {
+        post :create, list: {title: 'test'}
+      }.to change { List.count }.by(1)
+      expect(response).to be_redirect
+    end
+
+    it 'doesnt create if attributes are invalid' do
+      expect {
+        post :create, list: {bob: 'bob'}
+      }.not_to change { List.count }
+      expect(response).not_to be_redirect
+    end
 
   end
 
