@@ -79,17 +79,14 @@ describe TasksController do
       expect(response).not_to be_redirect
     end
   end
+
+  describe 'DELETE#destroy' do
+    let!(:task) {list.tasks.build(body: "test body")}
+    it "destroys the record" do
+      task.save
+      expect {
+        delete :destroy, :list_id => list.id, :id => task.id
+      }.to change { Task.count }.by(-1)
+    end
+  end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
