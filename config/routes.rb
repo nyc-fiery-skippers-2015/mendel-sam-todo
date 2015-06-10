@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :lists, except: [:edit, :update]
+  resources :lists, except: [:edit, :update] do
+    resources :tasks
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
