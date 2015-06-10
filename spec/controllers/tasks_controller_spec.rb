@@ -44,7 +44,33 @@ describe TasksController do
       }.not_to change {Task.count}
       expect(response).not_to be_redirect
     end
+  end
 
+  describe 'GET#edit' do
+    let(:task) {list.tasks.build(body: "test body")}
+    it 'is successful' do
+      task.save
+      get :edit, list_id: list.id, id: task.id
+      expect(response).to be_success
+    end
 
+    it 'assigns @task to the Task found by id' do
+      task.save
+      get :edit, list_id: list.id, id: task.id
+      expect(assigns(:task)).to eq task
+    end
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
