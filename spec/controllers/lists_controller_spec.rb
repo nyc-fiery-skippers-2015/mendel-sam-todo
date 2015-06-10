@@ -52,8 +52,15 @@ describe ListsController do
       }.not_to change { List.count }
       expect(response).not_to be_redirect
     end
-
   end
 
-
+  describe 'DELETE#destroy' do
+    let!(:list) {List.create(title: 'test')}
+    it 'should delete the list' do
+      expect {
+        delete :destroy, id: list.id
+      }.to change { List.count }.by(-1)
+      expect(response).to be_redirect
+    end
+  end
 end
