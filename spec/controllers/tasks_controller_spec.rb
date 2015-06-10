@@ -60,6 +60,25 @@ describe TasksController do
       expect(assigns(:task)).to eq task
     end
   end
+
+  describe 'PUT#update' do
+    let!(:task) {list.tasks.build(body: "test body")}
+    it "updates with valid attributes" do
+      task.save
+      expect {
+        put :update, :list_id => list.id, :id => task.id, :task => {:body => "yo"}
+      }.to change { task.reload.body }.to("yo")
+      expect(response).to be_redirect
+    end
+
+    it "doesn't update if attributes are invalid" do
+      task.save
+      expect {
+        put :update, :list_id => list.id, :id => task.id, :task => {:body => nil}
+      }.to_not change { task.reload.body }
+      expect(response).not_to be_redirect
+    end
+  end
 end
 
 
